@@ -1,0 +1,37 @@
+.eb-detalle__nombre {
+  font-size: 1.3rem;
+}
+
+fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.form-label {
+  margin-bottom: 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--eb-texto-suave);
+}
+
+.progress {
+  height: 1rem;
+  background: var(--eb-fondo-elevado);
+}
+
+.progress-bar {
+  background: var(--eb-acento);
+  font-size: 0.7rem;
+}
+
+.eb-girando {
+  animation: eb-girar 1s linear infinite;
+}
+
+@keyframes eb-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,141 @@
+<form class="eb-tarjeta p-3 p-md-4" [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+  <div class="d-flex align-items-center gap-3 mb-3">
+    <app-avatar
+      size="lg"
+      [acento]="true"
+      [src]="fotoPreview()"
+      [alt]="(form.controls.nombre.value || 'Nuevo') + ' ' + (form.controls.apellidos.value || 'jugador')"
+    ></app-avatar>
+    <div class="flex-grow-1">
+      <h3 class="eb-detalle__nombre m-0">{{ esNuevo ? 'Nuevo jugador' : 'Editar jugador' }}</h3>
+      <span class="small text-suave">Los campos con * son obligatorios.</span>
+    </div>
+  </div>
+
+  <fieldset [disabled]="guardando()" class="row g-3">
+    <!-- Datos de texto y números -->
+    <div class="col-sm-6">
+      <label for="pf-nombre" class="form-label">Nombre *</label>
+      <input id="pf-nombre" class="form-control" formControlName="nombre" autocomplete="off"
+        [class.is-invalid]="error('nombre')" [attr.aria-describedby]="error('nombre') ? 'pf-nombre-error' : null" />
+      @if (error('nombre'); as msg) { <div id="pf-nombre-error" class="invalid-feedback">{{ msg }}</div> }
+    </div>
+
+    <div class="col-sm-6">
+      <label for="pf-apellidos" class="form-label">Apellidos *</label>
+      <input id="pf-apellidos" class="form-control" formControlName="apellidos" autocomplete="off"
+        [class.is-invalid]="error('apellidos')" [attr.aria-describedby]="error('apellidos') ? 'pf-apellidos-error' : null" />
+      @if (error('apellidos'); as msg) { <div id="pf-apellidos-error" class="invalid-feedback">{{ msg }}</div> }
+    </div>
+
+    <div class="col-sm-6">
+      <label for="pf-posicion" class="form-label">Posición *</label>
+      <select id="pf-posicion" class="form-select" formControlName="posicion"
+        [class.is-invalid]="error('posicion')" [attr.aria-describedby]="error('posicion') ? 'pf-posicion-error' : null">
+        <option value="" disabled>Elige una posición</option>
+        @for (pos of posiciones; track pos) { <option [value]="pos">{{ pos }}</option> }
+      </select>
+      @if (error('posicion'); as msg) { <div id="pf-posicion-error" class="invalid-feedback">{{ msg }}</div> }
+    </div>
+
+    <div class="col-sm-6">
+      <label for="pf-nacionalidad" class="form-label">Nacionalidad *</label>
+      <input id="pf-nacionalidad" class="form-control" formControlName="nacionalidad"
+        [class.is-invalid]="error('nacionalidad')" [attr.aria-describedby]="error('nacionalidad') ? 'pf-nacionalidad-error' : null" />
+      @if (error('nacionalidad'); as msg) { <div id="pf-nacionalidad-error" class="invalid-feedback">{{ msg }}</div> }
+    </div>
+
+    <div class="col-6 col-md-4">
+      <label for="pf-dorsal" class="form-label">Dorsal *</label>
+      <input id="pf-dorsal" type="number" min="0" max="99" class="form-control" formControlName="dorsal"
+        [class.is-invalid]="error('dorsal')" [attr.aria-describedby]="error('dorsal') ? 'pf-dorsal-error' : null" />
+      @if (error('dorsal'); as msg) { <div id="pf-dorsal-error" class="invalid-feedback">{{ msg }}</div> }
+    </div>
+
+    <div class="col-6 col-md-4">
+      <label for="pf-edad" class="form-label">Edad (años) *</label>
+      <input id="pf-edad" type="number" min="16" max="50" class="form-control" formControlName="edad"
+        [class.is-invalid]="error('edad')" [attr.aria-describedby]="error('edad') ? 'pf-edad-error' : null" />
+      @if (error('edad'); as msg) { <div id="pf-edad-error" class="invalid-feedback">{{ msg }}</div> }
+    </div>
+
+    <div class="col-6 col-md-4">
+      <label for="pf-puntos" class="form-label">Puntos por partido *</label>
+      <input id="pf-puntos" type="number" step="0.1" min="0" max="60" class="form-control" formControlName="puntosPorPartido"
+        [class.is-invalid]="error('puntosPorPartido')" [attr.aria-describedby]="error('puntosPorPartido') ? 'pf-puntos-error' : null" />
+      @if (error('puntosPorPartido'); as msg) { <div id="pf-puntos-error" class="invalid-feedback">{{ msg }}</div> }
+    </div>
+
+    <div class="col-6 col-md-4">
+      <label for="pf-altura" class="form-label">Altura (cm) *</label>
+      <input id="pf-altura" type="number" min="150" max="240" class="form-control" formControlName="altura"
+        [class.is-invalid]="error('altura')" [attr.aria-describedby]="error('altura') ? 'pf-altura-error' : null" />
+      @if (error('altura'); as msg) { <div id="pf-altura-error" class="invalid-feedback">{{ msg }}</div> }
+    </div>
+
+    <div class="col-6 col-md-4">
+      <label for="pf-peso" class="form-label">Peso (kg) *</label>
+      <input id="pf-peso" type="number" min="50" max="180" class="form-control" formControlName="peso"
+        [class.is-invalid]="error('peso')" [attr.aria-describedby]="error('peso') ? 'pf-peso-error' : null" />
+      @if (error('peso'); as msg) { <div id="pf-peso-error" class="invalid-feedback">{{ msg }}</div> }
+    </div>
+
+    <div class="col-12 col-md-4">
+      <label for="pf-info" class="form-label">Enlace de información</label>
+      <input id="pf-info" type="url" class="form-control" formControlName="infoUrl" placeholder="https://..."
+        [class.is-invalid]="error('infoUrl')" [attr.aria-describedby]="error('infoUrl') ? 'pf-info-error' : null" />
+      @if (error('infoUrl'); as msg) { <div id="pf-info-error" class="invalid-feedback">{{ msg }}</div> }
+    </div>
+
+    <div class="col-12">
+      <label for="pf-biografia" class="form-label">Biografía *</label>
+      <textarea id="pf-biografia" rows="3" class="form-control" formControlName="biografia"
+        [class.is-invalid]="error('biografia')" [attr.aria-describedby]="error('biografia') ? 'pf-biografia-error' : null"></textarea>
+      <div class="form-text">{{ form.controls.biografia.value.length }}/500</div>
+      @if (error('biografia'); as msg) { <div id="pf-biografia-error" class="invalid-feedback d-block">{{ msg }}</div> }
+    </div>
+
+    <!-- Archivos: se suben a Firebase Storage al guardar -->
+    <div class="col-sm-6">
+      <label for="pf-foto" class="form-label">Foto {{ player?.fotoUrl ? '' : '*' }}</label>
+      <input id="pf-foto" type="file" class="form-control" [accept]="tiposFoto" (change)="onArchivo($event, 'fotos')"
+        [class.is-invalid]="error('foto')" [attr.aria-describedby]="'pf-foto-ayuda' + (error('foto') ? ' pf-foto-error' : '')" />
+      <div id="pf-foto-ayuda" class="form-text">
+        JPG, PNG o WebP, hasta {{ maxFotoMb }} MB.{{ player?.fotoUrl ? ' Si no eliges ninguna se mantiene la actual.' : '' }}
+      </div>
+      @if (error('foto'); as msg) { <div id="pf-foto-error" class="invalid-feedback d-block">{{ msg }}</div> }
+      @if (progresoFoto() !== null) {
+        <div class="progress mt-2" role="progressbar" aria-label="Subida de la foto"
+          [attr.aria-valuenow]="progresoFoto()" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar" [style.width.%]="progresoFoto()">{{ progresoFoto() }} %</div>
+        </div>
+      }
+    </div>
+
+    <div class="col-sm-6">
+      <label for="pf-video" class="form-label">Vídeo {{ player?.videoUrl ? '' : '*' }}</label>
+      <input id="pf-video" type="file" class="form-control" [accept]="tiposVideo" (change)="onArchivo($event, 'videos')"
+        [class.is-invalid]="error('video')" [attr.aria-describedby]="'pf-video-ayuda' + (error('video') ? ' pf-video-error' : '')" />
+      <div id="pf-video-ayuda" class="form-text">
+        MP4 o WebM, hasta {{ maxVideoMb }} MB.{{ player?.videoUrl ? ' Si no eliges ninguno se mantiene el actual.' : '' }}
+      </div>
+      @if (error('video'); as msg) { <div id="pf-video-error" class="invalid-feedback d-block">{{ msg }}</div> }
+      @if (progresoVideo() !== null) {
+        <div class="progress mt-2" role="progressbar" aria-label="Subida del vídeo"
+          [attr.aria-valuenow]="progresoVideo()" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar" [style.width.%]="progresoVideo()">{{ progresoVideo() }} %</div>
+        </div>
+      }
+    </div>
+  </fieldset>
+
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <button type="button" class="eb-btn eb-btn--borde" (click)="cancelar()" [disabled]="guardando()">Cancelar</button>
+    <button type="submit" class="eb-btn eb-btn--primario" [disabled]="guardando()">
+      <svg class="eb-icono" [class.eb-girando]="guardando()" aria-hidden="true">
+        <use [attr.href]="'assets/icons/icons.svg#' + (guardando() ? 'loader' : 'check')"></use>
+      </svg>
+      {{ guardando() ? 'Guardando...' : 'Guardar' }}
+    </button>
+  </div>
+</form>

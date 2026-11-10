@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DetailComponent } from './detail';
-import { PLAYERS_DATA } from '../../data/players.mock';
+import { PLAYERS_FIXTURE as PLAYERS_DATA } from '../../testing/players.fixture';
 
 describe('DetailComponent', () => {
   let component: DetailComponent;
@@ -34,5 +34,12 @@ describe('DetailComponent', () => {
     const enlace = (fixture.nativeElement as HTMLElement).querySelector<HTMLAnchorElement>('.eb-btn--info');
     expect(enlace?.getAttribute('href')).toBe(PLAYERS_DATA[0].infoUrl);
     expect(enlace?.getAttribute('target')).toBe('_blank');
+  });
+
+  it('el botón Editar emite editar', () => {
+    let editar = false;
+    component.editar.subscribe(() => (editar = true));
+    (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.eb-btn--primario')?.click();
+    expect(editar).toBe(true);
   });
 });

@@ -1,59 +1,46 @@
-# EquipoBasket
+# EQUIPO BASKET · Producto 2 (Angular + Firebase)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.27.
+Aplicación Angular 21 (standalone, Bootstrap 5.3) que gestiona la plantilla de un equipo de baloncesto.
+Los datos se guardan en **Cloud Firestore** y las fotos y vídeos en **Firebase Storage**, con `@angular/fire`.
 
-## Development server
+## Funcionalidades
 
-To start a local development server, run:
+- Listado de jugadores suscrito a Firestore en tiempo real: altas, cambios y bajas hechos desde la app
+  o desde la consola de Firebase aparecen sin refrescar.
+- Buscador por nombre y filtro por posición (pipe `playerFilter`).
+- Icono de borrar en cada jugador (con confirmación); borra también sus archivos de Storage.
+- Ficha del jugador en tiempo real (`docData`) con reproductor de vídeo propio y botón **Editar**.
+- Botón **Nuevo** con formulario reactivo: campos obligatorios, rangos, dorsal único, subida de foto
+  y vídeo desde el ordenador con barra de progreso y mensaje de guardado.
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Puesta en marcha
 
 ```bash
-ng generate --help
+npm install
+npm start            # http://localhost:4200
+npm test             # tests unitarios (Vitest)
+npm run build
 ```
 
-## Building
+La configuración del proyecto Firebase está en `src/environments/environment.ts`.
 
-To build the project run:
+## Base de datos
 
-```bash
-ng build
+- Colección `players`: un documento por jugador con 13 campos (nombre, apellidos, posición, dorsal, edad,
+  altura, peso, nacionalidad, puntos por partido, fotoUrl, videoUrl, infoUrl y biografía).
+- Carga inicial: `node scripts/seed-firestore.mjs` sube los jugadores de `scripts/players.seed.json`
+  y sus archivos de `public/assets` a Storage. Se puede repetir sin duplicar datos.
+- Reglas: `firestore.rules` y `storage.rules` (se publican desde la consola de Firebase).
+
+## Estructura
+
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+src/app/
+├─ components/       players (lista), detail (ficha), player-form (alta/edición), media (vídeo)
+├─ shared/
+│  ├─ services/      players.service (Firestore), media-storage.service (Storage), toast.service
+│  ├─ validators/    dorsal único, tipo y tamaño de archivo
+│  ├─ components/    header, footer, avatar, toast
+│  ├─ models/ pipes/ styles/ icons/
+└─ testing/          datos y dobles de Firebase para los tests
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

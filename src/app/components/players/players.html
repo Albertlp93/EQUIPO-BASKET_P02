@@ -1,6 +1,6 @@
-<!-- Filtros: texto + desplegable (parámetros del pipe playerFilter) -->
+<!-- Filtros: texto + desplegable (parámetros del pipe playerFilter) y botón Nuevo -->
 <div class="row g-2 mb-3">
-  <div class="col-sm-6">
+  <div class="col-sm-5">
     <div class="eb-campo-icono">
       <svg class="eb-icono" aria-hidden="true"><use href="assets/icons/icons.svg#search"></use></svg>
       <input
@@ -12,49 +12,84 @@
       />
     </div>
   </div>
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <div class="eb-campo-icono">
       <svg class="eb-icono" aria-hidden="true"><use href="assets/icons/icons.svg#funnel"></use></svg>
       <select class="form-select" aria-label="Filtrar por posición" [(ngModel)]="posicion">
-        <option value="">Todas las posiciones</option>
+        <option value="">Todas</option>
         <option *ngFor="let pos of posiciones" [value]="pos">{{ pos }}</option>
       </select>
     </div>
   </div>
+  <div class="col-sm-3 d-grid">
+    <button type="button" class="eb-btn eb-btn--primario justify-content-center" (click)="onNuevo()">
+      <svg class="eb-icono" aria-hidden="true"><use href="assets/icons/icons.svg#plus"></use></svg>
+      Nuevo
+    </button>
+  </div>
 </div>
 
-<ng-container *ngIf="players | playerFilter: texto : posicion as filtrados">
-  <ul class="list-unstyled m-0 d-grid gap-2" *ngIf="filtrados.length; else sinResultados">
-    <li *ngFor="let player of filtrados; trackBy: trackById">
-      <button
-        type="button"
-        class="eb-jugador eb-tarjeta w-100 text-start"
-        [class.eb-jugador--activo]="player.id === selectedPlayer?.id"
-        [attr.aria-pressed]="player.id === selectedPlayer?.id"
-        (click)="onSelectPlayer(player)"
+<!-- Estado de carga y error de conexión -->
+<div *ngIf="errorCarga()" class="eb-tarjeta text-center py-4 mb-2 text-danger" role="alert">
+  No se han podido cargar los jugadores desde Firebase.
+</div>
+<div *ngIf="players() === undefined" class="eb-tarjeta text-center text-suave py-4" role="status">
+  Cargando jugadores...
+</div>
+
+<ng-container *ngIf="players() as lista">
+  <ng-container *ngIf="lista | playerFilter: texto : posicion as filtrados">
+    <p class="small text-suave mb-2">{{ filtrados.length }} de {{ lista.length }} jugadores</p>
+
+    <ul class="list-unstyled m-0 d-grid gap-2" *ngIf="filtrados.length; else sinResultados">
+      <li
+        *ngFor="let player of filtrados; trackBy: trackById"
+        class="eb-jugador eb-tarjeta"
+        [class.eb-jugador--activo]="player.id === selectedId"
       >
-        <app-avatar
-          [src]="player.fotoUrl"
-          [alt]="player.nombre + ' ' + player.apellidos"
-          [acento]="player.id === selectedPlayer?.id"
-        ></app-avatar>
-        <span class="flex-grow-1">
-          <span class="d-block fw-bold">{{ player.nombre }} {{ player.apellidos }}</span>
-          <span class="d-block small text-suave">
-            #{{ player.dorsal }} · {{ player.posicion }} · {{ player.edad }} años · {{ player.altura / 100 | number: '1.2-2' }} m
+        <button
+          type="button"
+          class="eb-jugador__seleccion"
+          [attr.aria-pressed]="player.id === selectedId"
+          (click)="onSelectPlayer(player)"
+        >
+          <app-avatar
+            [src]="player.fotoUrl"
+            [alt]="player.nombre + ' ' + player.apellidos"
+            [acento]="player.id === selectedId"
+          ></app-avatar>
+          <span class="flex-grow-1">
+            <span class="d-block fw-bold">{{ player.nombre }} {{ player.apellidos }}</span>
+            <span class="d-block small text-suave">
+              #{{ player.dorsal }} · {{ player.posicion }} · {{ player.edad }} años · {{ player.altura / 100 | number: '1.2-2' }} m
+            </span>
           </span>
-        </span>
-        <span *ngIf="player.id === selectedPlayer?.id" class="eb-jugador__marca">Seleccionado</span>
-      </button>
-    </li>
-  </ul>
+          <span *ngIf="player.id === selectedId" class="eb-jugador__marca">Seleccionado</span>
+        </button>
+
+        <button
+          type="button"
+          class="eb-btn eb-btn--icono eb-btn--borrar"
+          [disabled]="borrandoId() === player.id"
+          [attr.aria-label]="'Borrar a ' + player.nombre + ' ' + player.apellidos"
+          [title]="'Borrar a ' + player.nombre + ' ' + player.apellidos"
+          (click)="borrar(player)"
+        >
+          <svg class="eb-icono" aria-hidden="true"><use href="assets/icons/icons.svg#trash"></use></svg>
+        </button>
+      </li>
+    </ul>
+  </ng-container>
 
   <ng-template #sinResultados>
     <div class="eb-tarjeta text-center text-suave py-4">
-      No hay jugadores que coincidan con el filtro.
-      <button type="button" class="btn btn-link text-acento p-0 d-block mx-auto" (click)="limpiarFiltros()">
-        Limpiar filtros
-      </button>
+      <ng-container *ngIf="lista.length; else listaVacia">
+        No hay jugadores que coincidan con el filtro.
+        <button type="button" class="btn btn-link text-acento p-0 d-block mx-auto" (click)="limpiarFiltros()">
+          Limpiar filtros
+        </button>
+      </ng-container>
+      <ng-template #listaVacia>Todavía no hay jugadores. Pulsa «Nuevo» para añadir el primero.</ng-template>
     </div>
   </ng-template>
 </ng-container>

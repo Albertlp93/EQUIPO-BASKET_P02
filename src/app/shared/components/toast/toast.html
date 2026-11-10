@@ -1,0 +1,13 @@
+<div class="eb-toasts" aria-live="polite" aria-atomic="false">
+  @for (toast of servicio.toasts(); track toast.id) {
+    <div class="eb-toast eb-toast--{{ toast.tipo }}" [attr.role]="toast.tipo === 'error' ? 'alert' : 'status'">
+      <svg class="eb-icono" aria-hidden="true">
+        <use [attr.href]="'assets/icons/icons.svg#' + (toast.tipo === 'error' ? 'triangle-alert' : toast.tipo === 'exito' ? 'check' : 'info')"></use>
+      </svg>
+      <span class="flex-grow-1">{{ toast.texto }}</span>
+      <button type="button" class="eb-toast__cerrar" aria-label="Cerrar aviso" (click)="servicio.cerrar(toast.id)">
+        <svg class="eb-icono" aria-hidden="true"><use href="assets/icons/icons.svg#x"></use></svg>
+      </button>
+    </div>
+  }
+</div>

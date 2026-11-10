@@ -2,32 +2,64 @@
 
 <main class="container py-4">
   <div class="row g-4">
-    <!-- Listado -->
+    <!-- Listado (datos de Firestore en tiempo real) -->
     <div class="col-lg-6">
       <h2 class="eb-titulo-seccion">Jugadores</h2>
       <app-players
-        [selectedPlayer]="jugadorSeleccionado"
+        [selectedId]="seleccionadoId()"
         (playerSelected)="onPlayerSelected($event)"
+        (nuevo)="onNuevo()"
+        (playerDeleted)="onPlayerDeleted($event)"
       ></app-players>
     </div>
 
-    <!-- Detalle y reproductor -->
-    <div class="col-lg-6">
-      <h2 class="eb-titulo-seccion">Detalle del jugador</h2>
-
-      @if (jugadorSeleccionado) {
-        <div class="d-grid gap-3">
-          <app-detail [player]="jugadorSeleccionado" (closeDetail)="onCloseDetail()"></app-detail>
-          <app-media [videoUrl]="jugadorSeleccionado.videoUrl"></app-media>
-        </div>
-      } @else {
-        <div class="eb-tarjeta eb-vacio text-center text-suave p-5">
-          <span class="eb-vacio__icono" aria-hidden="true">🏀</span>
-          Selecciona un jugador del listado para ver su ficha y su vídeo.
-        </div>
+    <!-- Panel derecho: ficha, edición o alta -->
+    <div class="col-lg-6" #panel>
+      @switch (modo()) {
+        @case ('nuevo') {
+          <h2 class="eb-titulo-seccion">Nuevo jugador</h2>
+          <app-player-form
+            [player]="null"
+            (guardado)="onGuardado($event)"
+            (cancelado)="onCancelarFormulario()"
+          ></app-player-form>
+        }
+        @case ('editar') {
+          <h2 class="eb-titulo-seccion">Editar jugador</h2>
+          @if (jugador(); as player) {
+            <app-player-form
+              [player]="player"
+              (guardado)="onGuardado($event)"
+              (cancelado)="onCancelarFormulario()"
+            ></app-player-form>
+          }
+        }
+        @default {
+          <h2 class="eb-titulo-seccion">Detalle del jugador</h2>
+          @if (jugador(); as player) {
+            <div class="d-grid gap-3">
+              <app-detail [player]="player" (closeDetail)="onCloseDetail()" (editar)="onEditar()"></app-detail>
+              @if (player.videoUrl) {
+                <app-media [videoUrl]="player.videoUrl"></app-media>
+              } @else {
+                <div class="eb-tarjeta text-center text-suave p-4">
+                  Este jugador aún no tiene vídeo. Pulsa «Editar» para subir uno.
+                </div>
+              }
+            </div>
+          } @else if (seleccionadoId() && jugador() === undefined) {
+            <div class="eb-tarjeta text-center text-suave p-5" role="status">Cargando ficha...</div>
+          } @else {
+            <div class="eb-tarjeta eb-vacio text-center text-suave p-5">
+              <span class="eb-vacio__icono" aria-hidden="true">🏀</span>
+              Selecciona un jugador del listado para ver su ficha y su vídeo, o pulsa «Nuevo» para añadir uno.
+            </div>
+          }
+        }
       }
     </div>
   </div>
 </main>
 
 <app-footer [teamName]="teamName"></app-footer>
+<app-toast></app-toast>

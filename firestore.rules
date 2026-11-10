@@ -1,0 +1,36 @@
+rules_version = '2';
+
+// Reglas de Firestore de EQUIPO BASKET (Producto 2).
+// Cualquiera puede leer, crear, editar y borrar jugadores (lo pide el enunciado: la app no tiene login),
+// pero solo se aceptan documentos con los campos y tipos correctos.
+// Se copian en Firebase > Firestore Database > Reglas > Publicar.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /players/{playerId} {
+      allow read: if true;
+      allow create, update: if jugadorValido(request.resource.data);
+      allow delete: if true;
+    }
+
+    function jugadorValido(d) {
+      return d.keys().hasOnly(['nombre', 'apellidos', 'posicion', 'dorsal', 'edad', 'altura', 'peso',
+                               'nacionalidad', 'puntosPorPartido', 'fotoUrl', 'videoUrl', 'infoUrl', 'biografia'])
+        && d.keys().hasAll(['nombre', 'apellidos', 'posicion', 'dorsal', 'edad', 'altura', 'peso',
+                            'nacionalidad', 'puntosPorPartido', 'biografia'])
+        && d.nombre is string && d.nombre.size() > 0 && d.nombre.size() <= 40
+        && d.apellidos is string && d.apellidos.size() > 0 && d.apellidos.size() <= 60
+        && d.posicion in ['Base', 'Escolta', 'Alero', 'Ala-Pívot', 'Pívot']
+        && d.dorsal is int && d.dorsal >= 0 && d.dorsal <= 99
+        && d.edad is int && d.edad >= 16 && d.edad <= 50
+        && d.altura is number && d.altura >= 150 && d.altura <= 240
+        && d.peso is number && d.peso >= 50 && d.peso <= 180
+        && d.nacionalidad is string && d.nacionalidad.size() > 0 && d.nacionalidad.size() <= 40
+        && d.puntosPorPartido is number && d.puntosPorPartido >= 0 && d.puntosPorPartido <= 60
+        && d.biografia is string && d.biografia.size() > 0 && d.biografia.size() <= 500
+        && d.get('fotoUrl', '') is string
+        && d.get('videoUrl', '') is string
+        && d.get('infoUrl', '') is string;
+    }
+  }
+}

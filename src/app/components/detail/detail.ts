@@ -8,7 +8,7 @@ interface DatoFicha {
   valor: string;
 }
 
-/** Ficha completa del jugador seleccionado. */
+/** Ficha completa del jugador seleccionado (se actualiza sola si cambia en Firebase). */
 @Component({
   selector: 'app-detail',
   standalone: true,
@@ -19,6 +19,8 @@ interface DatoFicha {
 export class DetailComponent {
   @Input() player: Player | null = null;
   @Output() closeDetail = new EventEmitter<void>();
+  /** Pide al padre abrir el formulario de edición. */
+  @Output() editar = new EventEmitter<void>();
 
   /** Datos que se muestran en las casillas de la ficha. */
   get datos(): DatoFicha[] {
@@ -39,5 +41,9 @@ export class DetailComponent {
 
   cerrar(): void {
     this.closeDetail.emit();
+  }
+
+  onEditar(): void {
+    this.editar.emit();
   }
 }

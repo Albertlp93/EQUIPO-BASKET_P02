@@ -11,7 +11,7 @@
         <h3 class="eb-detalle__nombre m-0">{{ player.nombre }} {{ player.apellidos }}</h3>
         <span class="text-acento small">{{ player.posicion }}</span>
       </div>
-      <div class="d-flex gap-2 align-self-start">
+      <div class="d-flex flex-wrap justify-content-end gap-2 align-self-start">
         <!-- Ficha externa del jugador (se abre en otra pestaña) -->
         @if (player.infoUrl) {
           <a
@@ -27,6 +27,10 @@
             Info
           </a>
         }
+        <button type="button" class="eb-btn eb-btn--primario" (click)="onEditar()" title="Editar jugador">
+          <svg class="eb-icono" aria-hidden="true"><use href="assets/icons/icons.svg#pencil"></use></svg>
+          Editar
+        </button>
         <button type="button" class="eb-btn eb-btn--peligro" (click)="cerrar()">
           <svg class="eb-icono" aria-hidden="true"><use href="assets/icons/icons.svg#x"></use></svg>
           Cerrar

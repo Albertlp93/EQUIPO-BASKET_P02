@@ -1,8 +1,8 @@
 .eb-jugador {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.8rem 1rem;
+  gap: 0.5rem;
+  padding-right: 0.75rem;
   color: var(--eb-texto);
   transition:
     border-color 0.15s,
@@ -21,8 +21,35 @@
   background: var(--eb-acento-fondo);
 }
 
+/* Zona clicable que selecciona el jugador */
+.eb-jugador__seleccion {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  padding: 0.8rem 0 0.8rem 1rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: start;
+}
+
 .eb-jugador__marca {
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--eb-acento);
+}
+
+/* Papelera: discreta hasta que se pasa el ratón por encima */
+.eb-btn--borrar {
+  flex-shrink: 0;
+  background: transparent;
+  color: var(--eb-texto-suave);
+}
+
+.eb-btn--borrar:hover:not(:disabled),
+.eb-btn--borrar:focus-visible {
+  background: var(--eb-rojo);
+  color: #fff;
 }

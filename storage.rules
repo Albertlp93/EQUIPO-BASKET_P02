@@ -1,0 +1,23 @@
+rules_version = '2';
+
+// Reglas de Firebase Storage de EQUIPO BASKET (Producto 2).
+// Lectura pública (las fotos y vídeos se muestran en la app) y subida limitada por tipo y tamaño,
+// igual que valida el formulario. Se copian en Firebase > Storage > Reglas > Publicar.
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    match /players/fotos/{archivo} {
+      allow read: if true;
+      allow create, update: if request.resource.size <= 2 * 1024 * 1024
+                            && request.resource.contentType.matches('image/(jpeg|png|webp)');
+      allow delete: if true;
+    }
+
+    match /players/videos/{archivo} {
+      allow read: if true;
+      allow create, update: if request.resource.size <= 30 * 1024 * 1024
+                            && request.resource.contentType.matches('video/(mp4|webm)');
+      allow delete: if true;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { PlayerFilterPipe } from './player-filter.pipe';
-import { PLAYERS_DATA } from '../../data/players.mock';
+import { PLAYERS_FIXTURE as PLAYERS_DATA } from '../../testing/players.fixture';
 
 describe('PlayerFilterPipe', () => {
   const pipe = new PlayerFilterPipe();

@@ -1,0 +1,45 @@
+.eb-toasts {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1080;
+  display: grid;
+  gap: 0.5rem;
+  width: min(22rem, calc(100vw - 2rem));
+}
+
+.eb-toast {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--eb-radio);
+  box-shadow: 0 6px 20px rgba(29, 21, 48, 0.18);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.eb-toast--exito {
+  background: #1f8a4c;
+}
+
+.eb-toast--error {
+  background: var(--eb-rojo);
+}
+
+.eb-toast--info {
+  background: var(--eb-fondo-header);
+}
+
+.eb-toast__cerrar {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.eb-toast__cerrar:hover {
+  opacity: 1;
+}
