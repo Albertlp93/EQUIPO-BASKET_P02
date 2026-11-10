@@ -5,6 +5,7 @@ import { of, startWith, switchMap } from 'rxjs';
 import { HeaderComponent } from './shared/components/header/header';
 import { FooterComponent } from './shared/components/footer/footer';
 import { ToastComponent } from './shared/components/toast/toast';
+import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog';
 import { PlayersComponent } from './components/players/players';
 import { DetailComponent } from './components/detail/detail';
 import { MediaComponent } from './components/media/media';
@@ -28,6 +29,7 @@ export type ModoPanel = 'ver' | 'editar' | 'nuevo';
     HeaderComponent,
     FooterComponent,
     ToastComponent,
+    ConfirmDialogComponent,
     PlayersComponent,
     DetailComponent,
     MediaComponent,

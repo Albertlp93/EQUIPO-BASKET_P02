@@ -1,0 +1,35 @@
+@if (servicio.actual(); as dialogo) {
+  <div class="eb-modal-fondo" (click)="cancelar()"></div>
+  <div
+    class="eb-modal eb-tarjeta"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="eb-modal-titulo"
+    aria-describedby="eb-modal-mensaje"
+  >
+    <div class="d-flex align-items-start gap-3">
+      <span class="eb-modal__icono" [class.eb-modal__icono--peligro]="dialogo.peligro" aria-hidden="true">
+        <svg class="eb-icono"><use [attr.href]="'assets/icons/icons.svg#' + (dialogo.peligro ? 'trash' : 'info')"></use></svg>
+      </span>
+      <div>
+        <h2 id="eb-modal-titulo" class="eb-modal__titulo">{{ dialogo.titulo }}</h2>
+        <p id="eb-modal-mensaje" class="m-0 text-suave">{{ dialogo.mensaje }}</p>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <button #cancelarBtn type="button" class="eb-btn eb-btn--borde" (click)="cancelar()">
+        {{ dialogo.textoCancelar ?? 'Cancelar' }}
+      </button>
+      <button
+        type="button"
+        class="eb-btn"
+        [class.eb-btn--peligro]="dialogo.peligro"
+        [class.eb-btn--primario]="!dialogo.peligro"
+        (click)="aceptar()"
+      >
+        {{ dialogo.textoAceptar ?? 'Aceptar' }}
+      </button>
+    </div>
+  </div>
+}

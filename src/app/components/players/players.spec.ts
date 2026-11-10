@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlayersComponent } from './players';
 import { PLAYERS_FIXTURE } from '../../testing/players.fixture';
 import { crearPlayersServiceMock, proveedoresFirebaseMock } from '../../testing/firebase.mocks';
+import { ConfirmService } from '../../shared/services/confirm.service';
 
 describe('PlayersComponent', () => {
   let component: PlayersComponent;
@@ -47,7 +48,7 @@ describe('PlayersComponent', () => {
   });
 
   it('cada jugador tiene botón de borrar que, tras confirmar, lo borra de Firebase', async () => {
-    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    vi.spyOn(TestBed.inject(ConfirmService), 'preguntar').mockResolvedValue(true);
     const botones = el().querySelectorAll<HTMLButtonElement>('.eb-btn--borrar');
     expect(botones.length).toBe(PLAYERS_FIXTURE.length);
     botones[0].click();
@@ -56,9 +57,10 @@ describe('PlayersComponent', () => {
     expect(el().querySelectorAll('.eb-jugador').length).toBe(PLAYERS_FIXTURE.length - 1);
   });
 
-  it('si se cancela la confirmación no borra nada', () => {
-    vi.spyOn(window, 'confirm').mockReturnValue(false);
+  it('si se cancela la confirmación no borra nada', async () => {
+    vi.spyOn(TestBed.inject(ConfirmService), 'preguntar').mockResolvedValue(false);
     el().querySelector<HTMLButtonElement>('.eb-btn--borrar')?.click();
+    await fixture.whenStable();
     expect(players.borrar).not.toHaveBeenCalled();
   });
 

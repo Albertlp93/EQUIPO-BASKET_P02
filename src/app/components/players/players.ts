@@ -8,6 +8,7 @@ import { PlayerFilterPipe } from '../../shared/pipes/player-filter.pipe';
 import { AvatarComponent } from '../../shared/components/avatar/avatar';
 import { PlayersService } from '../../shared/services/players.service';
 import { ToastService } from '../../shared/services/toast.service';
+import { ConfirmService } from '../../shared/services/confirm.service';
 
 /**
  * Listado de jugadores leído de Firestore en tiempo real,
@@ -23,6 +24,7 @@ import { ToastService } from '../../shared/services/toast.service';
 export class PlayersComponent {
   private readonly service = inject(PlayersService);
   private readonly toast = inject(ToastService);
+  private readonly confirmar = inject(ConfirmService);
 
   /**
    * Suscripción a la colección `players`. `undefined` mientras llega la primera respuesta.
@@ -64,7 +66,13 @@ export class PlayersComponent {
   /** Pide confirmación y borra el jugador de Firestore (y sus archivos de Storage). */
   async borrar(player: Player): Promise<void> {
     const nombre = `${player.nombre} ${player.apellidos}`;
-    if (!confirm(`¿Seguro que quieres borrar a ${nombre}? Esta acción no se puede deshacer.`)) {
+    const aceptado = await this.confirmar.preguntar({
+      titulo: 'Borrar jugador',
+      mensaje: `¿Seguro que quieres borrar a ${nombre}? Se eliminarán también su foto y su vídeo. Esta acción no se puede deshacer.`,
+      textoAceptar: 'Borrar',
+      peligro: true,
+    });
+    if (!aceptado) {
       return;
     }
     this.borrandoId.set(player.id);
