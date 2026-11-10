@@ -1,0 +1,8 @@
+/*
+ * Estilos globales de la aplicación.
+ * Los estilos compartidos viven en src/app/shared/styles y se importan aquí
+ * para que estén disponibles en todos los componentes.
+ */
+@import './app/shared/styles/variables.css';
+@import './app/shared/styles/base.css';
+@import './app/shared/styles/ui.css';

@@ -1,0 +1,28 @@
+.eb-jugador {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  color: var(--eb-texto);
+  transition:
+    border-color 0.15s,
+    background-color 0.15s;
+}
+
+.eb-jugador:hover {
+  border-color: var(--eb-borde-fuerte);
+  background: var(--eb-fondo-elevado);
+}
+
+/* Estado seleccionado */
+.eb-jugador--activo,
+.eb-jugador--activo:hover {
+  border-color: var(--eb-acento);
+  background: var(--eb-acento-fondo);
+}
+
+.eb-jugador__marca {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--eb-acento);
+}

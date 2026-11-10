@@ -1,0 +1,148 @@
+import { Player, Posicion } from '../shared/models/player.model';
+
+/** Posiciones disponibles para el filtro desplegable del listado. */
+export const POSICIONES: Posicion[] = ['Base', 'Escolta', 'Alero', 'Ala-Pívot', 'Pívot'];
+
+/**
+ * Datos de ejemplo de la plantilla: jugadores reales de la NBA.
+ * Edad calculada a octubre de 2026; puntos por partido de la temporada 2024-25.
+ * Fotos: public/assets/image/jugadores/<apellido>.jpg (si falta, se muestran las iniciales).
+ */
+export const PLAYERS_DATA: Player[] = [
+  {
+    id: 1,
+    nombre: 'Stephen',
+    apellidos: 'Curry',
+    posicion: 'Base',
+    edad: 38,
+    altura: 188,
+    peso: 84,
+    dorsal: 30,
+    nacionalidad: 'Estados Unidos',
+    puntosPorPartido: 24.5,
+    fotoUrl: 'assets/image/jugadores/curry.jpg',
+    videoUrl: 'assets/videos/curry.mp4',
+    infoUrl: 'https://espndeportes.espn.com/basquetbol/nba/jugador/_/id/3975/stephen-curry',
+    biografia:
+      'Base de los Golden State Warriors y máximo triplista de la historia de la NBA. 4 anillos (2015, 2017, 2018, 2022) y 2 MVP de temporada regular (2015 y 2016).',
+  },
+  {
+    id: 2,
+    nombre: 'Shai',
+    apellidos: 'Gilgeous-Alexander',
+    posicion: 'Escolta',
+    edad: 28,
+    altura: 198,
+    peso: 88,
+    dorsal: 2,
+    nacionalidad: 'Canadá',
+    puntosPorPartido: 32.7,
+    fotoUrl: 'assets/image/jugadores/gilgeous-alexander.jpg',
+    videoUrl: 'assets/videos/alexanderGil.mp4',
+    infoUrl: 'https://espndeportes.espn.com/basquetbol/nba/jugador/_/id/4278073/shai-gilgeous-alexander',
+    biografia:
+      'Escolta de los Oklahoma City Thunder. MVP y campeón de la NBA en 2025, además de MVP de las Finales y máximo anotador de esa temporada.',
+  },
+  {
+    id: 3,
+    nombre: 'LeBron',
+    apellidos: 'James',
+    posicion: 'Alero',
+    edad: 41,
+    altura: 206,
+    peso: 113,
+    dorsal: 23,
+    nacionalidad: 'Estados Unidos',
+    puntosPorPartido: 24.4,
+    fotoUrl: 'assets/image/jugadores/james.jpg',
+    videoUrl: 'assets/videos/jamesLebron.mp4',
+    infoUrl: 'https://espndeportes.espn.com/basquetbol/nba/jugador/_/id/1966/lebron-james',
+    biografia:
+      'Alero de Los Angeles Lakers y máximo anotador de la historia de la NBA. 4 anillos, 4 MVP de temporada y 4 MVP de las Finales.',
+  },
+  {
+    id: 4,
+    nombre: 'Giannis',
+    apellidos: 'Antetokounmpo',
+    posicion: 'Ala-Pívot',
+    edad: 31,
+    altura: 211,
+    peso: 110,
+    dorsal: 34,
+    nacionalidad: 'Grecia',
+    puntosPorPartido: 30.4,
+    fotoUrl: 'assets/image/jugadores/antetokounmpo.jpg',
+    videoUrl: 'assets/videos/anteto.mp4',
+    infoUrl: 'https://espndeportes.espn.com/basquetbol/nba/jugador/_/id/3032977/giannis-antetokounmpo',
+    biografia:
+      'Ala-pívot de los Milwaukee Bucks, apodado «The Greek Freak». Campeón y MVP de las Finales en 2021 y 2 veces MVP de temporada (2019 y 2020).',
+  },
+  {
+    id: 5,
+    nombre: 'Nikola',
+    apellidos: 'Jokić',
+    posicion: 'Pívot',
+    edad: 31,
+    altura: 211,
+    peso: 129,
+    dorsal: 15,
+    nacionalidad: 'Serbia',
+    puntosPorPartido: 29.6,
+    fotoUrl: 'assets/image/jugadores/jokic.jpg',
+    videoUrl: 'assets/videos/jokic.mp4',
+    infoUrl: 'https://espndeportes.espn.com/basquetbol/nba/jugador/_/id/3112335/nikola-jokic',
+    biografia:
+      'Pívot de los Denver Nuggets y referente del juego interior pasador. Campeón y MVP de las Finales en 2023 y 3 veces MVP de temporada (2021, 2022 y 2024).',
+  },
+  {
+    id: 6,
+    nombre: 'Luka',
+    apellidos: 'Dončić',
+    posicion: 'Escolta',
+    edad: 27,
+    altura: 201,
+    peso: 98,
+    dorsal: 77,
+    nacionalidad: 'Eslovenia',
+    puntosPorPartido: 28.2,
+    fotoUrl: 'assets/image/jugadores/doncic.jpg',
+    videoUrl: 'assets/videos/doncic.mp4',
+    infoUrl: 'https://espndeportes.espn.com/basquetbol/nba/jugador/_/id/3945274/luka-doncic',
+    biografia:
+      'Escolta de Los Angeles Lakers tras su traspaso desde Dallas en 2025. Generador ofensivo con 5 selecciones en el mejor quinteto de la NBA.',
+  },
+  {
+    id: 7,
+    nombre: 'Kevin',
+    apellidos: 'Durant',
+    posicion: 'Alero',
+    edad: 38,
+    altura: 211,
+    peso: 109,
+    dorsal: 7,
+    nacionalidad: 'Estados Unidos',
+    puntosPorPartido: 26.6,
+    fotoUrl: 'assets/image/jugadores/durant.jpg',
+    videoUrl: 'assets/videos/durant.mp4',
+    infoUrl: 'https://espndeportes.espn.com/basquetbol/nba/jugador/_/id/3202/kevin-durant',
+    biografia:
+      'Alero de los Houston Rockets. 2 anillos y 2 MVP de las Finales (2017 y 2018), MVP de temporada en 2014 y 4 oros olímpicos con Estados Unidos.',
+  },
+  {
+    id: 8,
+    nombre: 'Victor',
+    apellidos: 'Wembanyama',
+    posicion: 'Pívot',
+    edad: 22,
+    altura: 224,
+    peso: 107,
+    dorsal: 1,
+    nacionalidad: 'Francia',
+    puntosPorPartido: 24.3,
+    fotoUrl: 'assets/image/jugadores/wembanyama.jpg',
+    videoUrl: 'assets/videos/wembanyama.mp4',
+    infoUrl: 'https://espndeportes.espn.com/basquetbol/nba/jugador/_/id/5104157/victor-wembanyama',
+    biografia:
+      'Pívot de los San Antonio Spurs. Número 1 del draft de 2023 y Rookie del Año en 2024, combina altura de 2,24 m con manejo de balón y tiro exterior.',
+  },
+];

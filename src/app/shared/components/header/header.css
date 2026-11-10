@@ -1,0 +1,24 @@
+.eb-header {
+  background: var(--eb-fondo-header);
+  color: var(--eb-header-texto);
+}
+
+.eb-header__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--eb-header-texto);
+  font-size: 1.4rem;
+}
+
+.eb-header__titulo {
+  font-size: 1.45rem;
+  color: var(--eb-header-texto);
+}
+
+.eb-header__subtitulo {
+  color: var(--eb-header-texto-suave);
+}

@@ -1,0 +1,33 @@
+<app-header [teamName]="teamName" [subtitle]="teamSubtitle"></app-header>
+
+<main class="container py-4">
+  <div class="row g-4">
+    <!-- Listado -->
+    <div class="col-lg-6">
+      <h2 class="eb-titulo-seccion">Jugadores</h2>
+      <app-players
+        [selectedPlayer]="jugadorSeleccionado"
+        (playerSelected)="onPlayerSelected($event)"
+      ></app-players>
+    </div>
+
+    <!-- Detalle y reproductor -->
+    <div class="col-lg-6">
+      <h2 class="eb-titulo-seccion">Detalle del jugador</h2>
+
+      @if (jugadorSeleccionado) {
+        <div class="d-grid gap-3">
+          <app-detail [player]="jugadorSeleccionado" (closeDetail)="onCloseDetail()"></app-detail>
+          <app-media [videoUrl]="jugadorSeleccionado.videoUrl"></app-media>
+        </div>
+      } @else {
+        <div class="eb-tarjeta eb-vacio text-center text-suave p-5">
+          <span class="eb-vacio__icono" aria-hidden="true">🏀</span>
+          Selecciona un jugador del listado para ver su ficha y su vídeo.
+        </div>
+      }
+    </div>
+  </div>
+</main>
+
+<app-footer [teamName]="teamName"></app-footer>

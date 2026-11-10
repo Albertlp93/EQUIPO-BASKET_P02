@@ -1,0 +1,60 @@
+<!-- Filtros: texto + desplegable (parámetros del pipe playerFilter) -->
+<div class="row g-2 mb-3">
+  <div class="col-sm-6">
+    <div class="eb-campo-icono">
+      <svg class="eb-icono" aria-hidden="true"><use href="assets/icons/icons.svg#search"></use></svg>
+      <input
+        type="search"
+        class="form-control"
+        placeholder="Buscar por nombre..."
+        aria-label="Buscar jugador por nombre"
+        [(ngModel)]="texto"
+      />
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="eb-campo-icono">
+      <svg class="eb-icono" aria-hidden="true"><use href="assets/icons/icons.svg#funnel"></use></svg>
+      <select class="form-select" aria-label="Filtrar por posición" [(ngModel)]="posicion">
+        <option value="">Todas las posiciones</option>
+        <option *ngFor="let pos of posiciones" [value]="pos">{{ pos }}</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="players | playerFilter: texto : posicion as filtrados">
+  <ul class="list-unstyled m-0 d-grid gap-2" *ngIf="filtrados.length; else sinResultados">
+    <li *ngFor="let player of filtrados; trackBy: trackById">
+      <button
+        type="button"
+        class="eb-jugador eb-tarjeta w-100 text-start"
+        [class.eb-jugador--activo]="player.id === selectedPlayer?.id"
+        [attr.aria-pressed]="player.id === selectedPlayer?.id"
+        (click)="onSelectPlayer(player)"
+      >
+        <app-avatar
+          [src]="player.fotoUrl"
+          [alt]="player.nombre + ' ' + player.apellidos"
+          [acento]="player.id === selectedPlayer?.id"
+        ></app-avatar>
+        <span class="flex-grow-1">
+          <span class="d-block fw-bold">{{ player.nombre }} {{ player.apellidos }}</span>
+          <span class="d-block small text-suave">
+            #{{ player.dorsal }} · {{ player.posicion }} · {{ player.edad }} años · {{ player.altura / 100 | number: '1.2-2' }} m
+          </span>
+        </span>
+        <span *ngIf="player.id === selectedPlayer?.id" class="eb-jugador__marca">Seleccionado</span>
+      </button>
+    </li>
+  </ul>
+
+  <ng-template #sinResultados>
+    <div class="eb-tarjeta text-center text-suave py-4">
+      No hay jugadores que coincidan con el filtro.
+      <button type="button" class="btn btn-link text-acento p-0 d-block mx-auto" (click)="limpiarFiltros()">
+        Limpiar filtros
+      </button>
+    </div>
+  </ng-template>
+</ng-container>

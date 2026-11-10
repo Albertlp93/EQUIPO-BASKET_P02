@@ -1,0 +1,22 @@
+.eb-detalle__nombre {
+  font-size: 1.3rem;
+}
+
+.eb-dato {
+  height: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--eb-radio);
+  background: var(--eb-fondo-elevado);
+}
+
+dt {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--eb-texto-suave);
+}
+
+dd {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}

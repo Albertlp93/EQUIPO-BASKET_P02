@@ -1,0 +1,48 @@
+/* Paleta, tipografía y medidas comunes de EQUIPO BASKET */
+:root {
+  /* Fondos (tema claro) */
+  --eb-fondo-pagina: #f5f3fb;
+  --eb-fondo-tarjeta: #ffffff;
+  --eb-fondo-elevado: #eeeaf8;
+
+  /* Cabecera y pie (franja violeta oscura con texto claro) */
+  --eb-fondo-header: #2b1d5e;
+  --eb-header-texto: #ffffff;
+  --eb-header-texto-suave: #cfc6f0;
+
+  /* Bordes */
+  --eb-borde: #ddd6f0;
+  --eb-borde-fuerte: #c4b9e6;
+
+  /* Texto */
+  --eb-texto: #1d1530;
+  --eb-texto-suave: #6b6385;
+
+  /* Acento (violeta) y colores de acción */
+  --eb-acento: #6a3df0;
+  --eb-acento-rgb: 106, 61, 240;
+  --eb-acento-oscuro: #5229d6;
+  --eb-acento-fondo: rgba(106, 61, 240, 0.08);
+  --eb-rojo: #e5383b;
+  --eb-rojo-oscuro: #c22b2e;
+  --eb-azul-electrico: #0066ff;
+  --eb-azul-electrico-oscuro: #0052cc;
+
+  /* Tipografías */
+  --eb-fuente-titulo: 'Archivo Black', 'Arial Black', sans-serif;
+  --eb-fuente-texto: 'Inter', system-ui, sans-serif;
+
+  /* Formas y sombras */
+  --eb-sombra: 0 1px 3px rgba(29, 21, 48, 0.08);
+  --eb-radio: 0.6rem;
+  --eb-radio-grande: 0.9rem;
+
+  /* Bootstrap hereda la paleta */
+  --bs-body-bg: var(--eb-fondo-pagina);
+  --bs-body-color: var(--eb-texto);
+  --bs-body-font-family: var(--eb-fuente-texto);
+  --bs-border-color: var(--eb-borde);
+  --bs-secondary-color: var(--eb-texto-suave);
+  --bs-primary: var(--eb-acento);
+  --bs-primary-rgb: var(--eb-acento-rgb);
+}
