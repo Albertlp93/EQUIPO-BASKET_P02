@@ -6,7 +6,9 @@
  * (`players/fotos/<id>.jpg` y `players/videos/<id>.mp4`). Se puede ejecutar varias veces:
  * cada jugador usa siempre el mismo id, así que no se duplican.
  *
- * Uso, desde la raíz del proyecto:  node scripts/seed-firestore.mjs
+ * Uso, desde la raíz del proyecto:
+ *   node scripts/seed-firestore.mjs                 -> carga todos los jugadores
+ *   node scripts/seed-firestore.mjs tatum edwards   -> solo los indicados (por su slug)
  * Requisito: reglas de Firestore y Storage que permitan escribir (modo de prueba o firestore.rules/storage.rules).
  */
 import { readFile } from 'node:fs/promises';
@@ -37,7 +39,12 @@ async function subir(storage, rutaLocal, carpeta, id) {
 const app = initializeApp(await leerConfig());
 const db = getFirestore(app);
 const storage = getStorage(app);
-const jugadores = JSON.parse(await readFile(new URL('./players.seed.json', import.meta.url), 'utf8'));
+const todos = JSON.parse(await readFile(new URL('./players.seed.json', import.meta.url), 'utf8'));
+const elegidos = process.argv.slice(2);
+const jugadores = elegidos.length ? todos.filter((j) => elegidos.includes(j.slug)) : todos;
+if (elegidos.length && jugadores.length !== elegidos.length) {
+  throw new Error(`Slugs no encontrados. Disponibles: ${todos.map((j) => j.slug).join(', ')}`);
+}
 
 for (const { slug, foto, video, ...datos } of jugadores) {
   const fotoUrl = await subir(storage, foto, 'fotos', slug);
