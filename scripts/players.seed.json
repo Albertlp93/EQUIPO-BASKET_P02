@@ -140,8 +140,8 @@
     "puntosPorPartido": 26.8,
     "infoUrl": "https://espndeportes.espn.com/basquetbol/nba/jugador/_/id/4065648/jayson-tatum",
     "biografia": "Alero de los Boston Celtics, campeón de la NBA en 2024 y All-Star desde 2020. Oro olímpico con Estados Unidos en Tokio 2020 y París 2024.",
-    "foto": "",
-    "video": ""
+    "foto": "public/assets/image/jugadores/tatum.jpg",
+    "video": "public/assets/videos/tatum.mp4"
   },
   {
     "slug": "edwards",
@@ -156,7 +156,7 @@
     "puntosPorPartido": 27.6,
     "infoUrl": "https://espndeportes.espn.com/basquetbol/nba/jugador/_/id/4594268/anthony-edwards",
     "biografia": "Escolta de los Minnesota Timberwolves, número 1 del draft de 2020 y All-Star desde 2023. Oro olímpico con Estados Unidos en París 2024.",
-    "foto": "",
-    "video": ""
+    "foto": "public/assets/image/jugadores/edwards.jpg",
+    "video": "public/assets/videos/edwards.mp4"
   }
 ]
